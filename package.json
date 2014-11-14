@@ -1,5 +1,5 @@
 {
-  "name": "azureContainer",
+  "name": "zure-content",
   "version": "0.1.0",
   "description": "File upload to Azure",
   "main": "index.js",
@@ -12,7 +12,9 @@
   },
   "keywords": [
     "azure",
-    "blob"
+    "container",
+    "blob",
+    "upload"
   ],
   "author": "Miguel Castillo <manchagnu@gmail.com>",
   "license": "MIT",
