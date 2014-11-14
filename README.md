@@ -15,7 +15,7 @@ Constructor to create instances of the container manager. An intance of AzureCon
 
 
 ### initialize(access) : method
-Initializes the container.  If the container name does not exist, one is created.
+Initializes the container.  If the container name does not exist, one is created.  If you already know the container exists, then you can safely omit calling this method.  If you are doubt, then always call this method.
 
 #### arguments
 - `accessLevel` - Optional string to specify if when creating a container, it should be `private`, public `blob`, or public `container`.  If nothing is proived, then container is `private`.
