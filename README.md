@@ -111,7 +111,7 @@ You can run it with something as simple as:
 First do your usual
 
 ```
-npm install
+$ npm install
 ```
 
 Then run the sample
