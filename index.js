@@ -18,8 +18,6 @@ Container.prototype.initialize = function initialize(accessLevel) {
   var _self = this;
   var access = accessLevel ? {publicAccessLevel: accessLevel} : null;
 
-  console.log(access);
-
   return spromise(function() {
     _self.blobSvc.createContainerIfNotExists(_self.name, access, resolveThis.bind(this));
   });
