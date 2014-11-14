@@ -88,21 +88,19 @@ var AzureContainer = require('azureContainer');
 var azureContainer = new AzureContainer(container, accountName, accountKey);
 ```
 
-Then we initialize the container... This will create a container for you if one does not exist.
+Then we initialize the container... This will create a container for you if one does not exist.  This call is completely optional if you know the container you are going to upload your file/directory to already exists.  We include it here to be thorough.
 ``` javascript
-azureContainer.initialize().then(function() {
+azureContainer.initialize()
 ```
 
 Then we upload the file
 ``` javascript
-  azureContainer.fileUpload(src).then(function(data) {
-    console.log("Files uploaded", data);
+azureContainer.fileUpload(src)
 ```
 
 Now we can list what was uploaded
-```
-    azureContainer.list().then(function(data) {
-      console.log("File listing", data);
+``` javascript
+azureContainer.list()
 ```
 
 ## Run the sample code
