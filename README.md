@@ -104,3 +104,12 @@ Now we can list what was uploaded
     azureContainer.list().then(function(data) {
       console.log("File listing", data);
 ```
+
+## Run the sample code
+You can run it with something as simple as:
+
+```
+$ node test.js --file . --container testme --account-name name --account-key key
+```
+That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
+
