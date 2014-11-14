@@ -122,3 +122,8 @@ $ node test.js --file . --container testme --account-name name --account-key key
 
 That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
 
+## npm Install
+
+```
+$ npm install zure-content
+```
