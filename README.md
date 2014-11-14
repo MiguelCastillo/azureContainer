@@ -18,7 +18,7 @@ Constructor to create instances of the container manager. An intance of AzureCon
 Initializes the container.  If the container name does not exist, one is created.
 
 #### arguments
-- accessLevel - Optional string to specify if when creating a container, it should be `private`, `blob`, `container`.  If nothing is proived, then container is `private`.
+- accessLevel - Optional string to specify if when creating a container, it should be `private`, public `blob`, or public `container`.  If nothing is proived, then container is `private`.
 
 Examples
 - `initialize('container')`
@@ -67,12 +67,14 @@ var accountName = nconf.get("account-name") || nconf.get("AZURE_STORAGE_ACCOUNT"
 var accountKey  = nconf.get("account-key")  || nconf.get("AZURE_STORAGE_ACCESS_KEY");
 var container   = nconf.get("container")    || nconf.get("AZURE_STORAGE_CONTAINER");
 var src         = nconf.get("file")         || nconf.get("AZURE_STORAGE_FILE");
+var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
 ```
 
 - accountName is the name of azure account where the container is located.
 - accountKey is the container access key.
 - container is the name of the container where files are uploaded to
 - src is what we are uploading.  This can be a file or a directory.  NOTE: directories are not processed recursively.
+- type is the type of container to create if one does not already exist.  Defaults to `private`.
 
 
 #### AzureContainer
