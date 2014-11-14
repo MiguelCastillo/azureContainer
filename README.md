@@ -52,7 +52,7 @@ promise
 
 A fully functional sample running AzureContainer can be seen in <a href='https://github.com/MiguelCastillo/azureContainer/blob/master/test.js'>test.js</a>
 
-Let's disect it right here:
+Let's dissect it right here:
 
 #### nconf
 `nconf` allows us to process input from the cli and environment variables.  Whichever is found first, with cli arguments having higher priority.
