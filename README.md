@@ -9,16 +9,16 @@ AzureContainer is promise based, so each interface that interacts with Azure ser
 Constructor to create instances of the container manager. An intance of AzureContainer provides interfaces to easily interact with your azure containers.
 
 #### arguments
-- container - Name of the container to upload files to.
-- accountName - Name of the storage account in which the container exists
-- accountKey - Access key for the container
+- `container` - Name of the container to upload files to.
+- `accountName` - Name of the storage account in which the container exists
+- `accountKey` - Access key for the container
 
 
 ### initialize(access) : method
 Initializes the container.  If the container name does not exist, one is created.
 
 #### arguments
-- accessLevel - Optional string to specify if when creating a container, it should be `private`, public `blob`, or public `container`.  If nothing is proived, then container is `private`.
+- `accessLevel` - Optional string to specify if when creating a container, it should be `private`, public `blob`, or public `container`.  If nothing is proived, then container is `private`.
 
 Examples
 - `initialize('container')`
@@ -32,7 +32,7 @@ promise
 Method to upload a file or files in a directory.
 
 #### arguments
-- src - Required string that's either the name of a file or a directory.  If a directory name is passed, all files directly below it will be uploaded.  This will probably be upgraded to handle globs.
+- `src` - Required string that's either the name of a file or a directory.  If a directory name is passed, all files directly below it will be uploaded.  This will probably be upgraded to handle globs.
 
 #### returns
 promise
