@@ -108,8 +108,17 @@ Now we can list what was uploaded
 ## Run the sample code
 You can run it with something as simple as:
 
+First do your usual
+
+```
+npm install
+```
+
+Then run the sample
+
 ```
 $ node test.js --file . --container testme --account-name name --account-key key
 ```
+
 That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
 
