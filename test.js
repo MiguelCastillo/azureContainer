@@ -10,19 +10,54 @@ var container   = nconf.get("container")    || nconf.get("AZURE_STORAGE_CONTAINE
 var src         = nconf.get("file")         || nconf.get("AZURE_STORAGE_FILE");
 var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
 
-
 // Prepare an azure container with provided name in order to upload some files
 var azureContainer = new AzureContainer(container, accountName, accountKey);
 
-azureContainer.initialize(type).then(function() {
-  azureContainer.fileUpload(src).then(function(data) {
-    console.log("Files uploaded", data);
-    azureContainer.list().then(function(data) {
+///
+/// Run sequence
+///
+initializeContainer(type)
+  .then(uploadFile, reportError)
+  .then(listFiles, reportError)
+  .catch(reportError);
+
+
+/**
+ * Initialze will make sure that a container is created if one does
+ * not exist.  But if the container already exists, then this call
+ * can be completely removed.
+ */
+function initializeContainer() {
+  return azureContainer.initialize(type)
+    .done(function(data) {
+      console.log("Container initialized", data);
+    });
+}
+
+
+/**
+ * Upload file/directory
+ */
+function uploadFile() {
+  return azureContainer.fileUpload(src)
+    .done(function(data) {
+      console.log("Files uploaded", data);
+    });
+}
+
+
+/**
+ * List container content
+ */
+function listFiles() {
+  return azureContainer.list()
+    .done(function(data) {
       console.log("File listing", data);
-    }, reportError);
-  }, reportError);
-}, reportError);
+    });
+}
+
 
 function reportError(error) {
   console.log(error);
 }
+
