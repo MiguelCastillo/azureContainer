@@ -14,9 +14,11 @@ function Container(containerName, accountName, accountKey) {
 }
 
 
-Container.prototype.initialize = function initialize(access) {
-  access  = access || {publicAccessLevel : 'container'};
+Container.prototype.initialize = function initialize(accessLevel) {
   var _self = this;
+  var access = accessLevel ? {publicAccessLevel: accessLevel} : null;
+
+  console.log(access);
 
   return spromise(function() {
     _self.blobSvc.createContainerIfNotExists(_self.name, access, resolveThis.bind(this));
@@ -24,10 +26,9 @@ Container.prototype.initialize = function initialize(access) {
 };
 
 
-Container.prototype.fileUpload = function fileUpload(src, dest) {
+Container.prototype.fileUpload = function fileUpload(src) {
   var _self = this;
   var files;
-  dest = path.normalize(dest || '');
   
   try {
     files = getFiles(src);  
@@ -35,13 +36,10 @@ Container.prototype.fileUpload = function fileUpload(src, dest) {
   catch(ex) {
     return spromise.reject(ex.message);
   }
-  
-  var multiple = files.length > 1;
 
   return spromise.all(files.map(function(file) {
     return spromise(function() {
-      var remoteFile = multiple ? path.join(dest, file.name) : dest;      
-      _self.blobSvc.createBlockBlobFromLocalFile(_self.name, remoteFile, file.fullPath, resolveThis.bind(this));
+      _self.blobSvc.createBlockBlobFromLocalFile(_self.name, file.name, file.fullPath, resolveThis.bind(this));
     });
   }));
 };
