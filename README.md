@@ -86,7 +86,7 @@ var AzureContainer = require('azureContainer');
 var azureContainer = new AzureContainer(container, accountName, accountKey);
 ```
 
-Then we initialize the container...
+Then we initialize the container... This will create a container for you if one does not exist.
 ``` javascript
 azureContainer.initialize().then(function() {
 ```
