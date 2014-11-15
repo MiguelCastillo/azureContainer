@@ -198,3 +198,6 @@ Command to download `--file` from Azure container.  `--file` can take a list of 
 $ zuredown --file "file1.txt, file2.txt"
 ```
 
+## TODO:
+
+- Per directory settings.
