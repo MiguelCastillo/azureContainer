@@ -1,7 +1,6 @@
 ## azureContainer
-Utility to simplifly uploading files to an azure container.
+Simplifly uploading, download, deleting, and listing of files in an azure container.
 
-AzureContainer is promise based, so each interface that interacts with Azure services will return a promise.
 
 ## Install
 
@@ -109,8 +108,9 @@ Now we can list what was uploaded
 azureContainer.list()
 ```
 
+## CLI
 
-## zureup
+### zureup
 
 When azureContainer is installed globally, `zureup` is setup as shell command you can use to upload files to Azure.
 
@@ -127,7 +127,7 @@ That command will upload the files in the current directory into the container `
 That's a lot of information, but if you configure `zure-content` correctly you can really simplify all `zure` commands.
 
 
-### How to simplify `zure` commands:
+#### How to simplify `zure` commands:
 
 - Install azureContainer globally.
 
@@ -154,7 +154,7 @@ $ export AZURE_STORAGE_CONTAINER='AnotherFolder'
 ```
 
 
-## zurels
+### zurels
 
 Command to list all files in the Azure container.
 
@@ -163,7 +163,7 @@ $ zurels
 ```
 
 
-## zuredel
+### zuredel
 
 Command to delete `--file` from the Azure container.  `--file` can take a list of comma separated files.  e.g.
 
@@ -172,7 +172,7 @@ $ zuredel --file "file1.txt, file2.txt"
 ```
 
 
-## azuredown
+### zuredown
 
 Command to download `--file` from Azure container.  `--file` can take a list of comma separated files.
 
