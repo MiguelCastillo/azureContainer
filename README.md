@@ -130,7 +130,7 @@ azureContainer.list()
 
 ## CLI
 
-When azureContainer is installed globally, several shell commands will become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+When azureContainer is installed globally, several shell commands will become availalbe; `zureup`, `zuredown`, `zuredel`, and `zurels`.
 
 ### zureup
 
