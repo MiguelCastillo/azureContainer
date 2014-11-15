@@ -1,5 +1,5 @@
 ## azureContainer
-Simplify uploading, download, deleting, and listing of files in an azure container.
+Simplify uploading, downloading, deleting, and listing of files in an azure container.
 
 
 ## Install
