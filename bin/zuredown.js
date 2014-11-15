@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 
-var AzureContainer = require('../index');
-var settings = require('./settings');
-
-// Prepare an azure container with provided name in order to upload some files
-var azureContainer = new AzureContainer(settings.container || "Documents", settings.accountName, settings.accountKey);
+var azureContainer = require('./factory')();
 
 
 ///
@@ -19,13 +15,13 @@ downloadFile()
  * Download file/directory
  */
 function downloadFile() {
-  var files = settings.src;
+  var file = azureContainer.settings.file;
 
-  if (typeof(files) === "string") {
-    files = files.split(',').map(function(file) {return {name: file.trim()};});
+  if (typeof(file) === "string") {
+    file = file.split(',').map(function(file) {return {name: file.trim()};});
   }
 
-  return azureContainer.fileDownload(files)
+  return azureContainer.fileDownload(file)
     .done(function(data) {
       console.log("File uploaded", data);
     });

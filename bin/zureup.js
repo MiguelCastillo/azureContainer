@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 
-var AzureContainer = require('../index');
-var settings = require('./settings');
-
-// Prepare an azure container with provided name in order to upload some files
-var azureContainer = new AzureContainer(settings.container || "Documents", settings.accountName, settings.accountKey);
+var azureContainer = require('./factory')();
 
 
 ///
@@ -22,7 +18,7 @@ initializeContainer()
  * can be completely removed.
  */
 function initializeContainer() {
-  return azureContainer.initialize(settings.type)
+  return azureContainer.initialize(azureContainer.settings.accessType)
     .done(function(data) {
       console.log("Container initialized", data);
     });
@@ -33,7 +29,7 @@ function initializeContainer() {
  * Upload file/directory
  */
 function uploadFile() {
-  return azureContainer.fileUpload(settings.src)
+  return azureContainer.fileUpload(azureContainer.settings.file)
     .done(function(data) {
       console.log("Files uploaded", data);
     });

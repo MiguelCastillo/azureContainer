@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/MiguelCastillo/azureContainer",
   "bin": {
+    "zure-init": "./bin/zure-init.js",
     "zurels": "./bin/zurels.js",
     "zureup": "./bin/zureup.js",
     "zuredown": "./bin/zuredown.js",
