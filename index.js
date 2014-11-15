@@ -31,12 +31,6 @@ Container.prototype.fileUpload = function fileUpload(files) {
     throw new TypeError("Must provide files to upload");
   }
 
-//  Not supporting this quite yet.
-//
-//  if (typeof(files) === "string") {
-//    files = files.split(',').map(function(file) {return file.trim();});
-//  }
-
   try {
     files = getLocalFiles(files);
   }
