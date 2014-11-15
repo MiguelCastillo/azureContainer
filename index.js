@@ -24,12 +24,17 @@ Container.prototype.initialize = function initialize(accessLevel) {
 };
 
 
-Container.prototype.fileUpload = function fileUpload(src) {
+Container.prototype.fileUpload = function fileUpload(files) {
   var _self = this;
-  var files;
-  
+
+//  Not supporting this quite yet.
+//
+//  if (typeof(files) === "string") {
+//    files = files.split(',').map(function(file) {return file.trim();});
+//  }
+
   try {
-    files = getFiles(src);  
+    files = getLocalFiles(files);
   }
   catch(ex) {
     return spromise.reject(ex.message);
@@ -38,6 +43,36 @@ Container.prototype.fileUpload = function fileUpload(src) {
   return spromise.all(files.map(function(file) {
     return spromise(function() {
       _self.blobSvc.createBlockBlobFromLocalFile(_self.name, file.name, file.fullPath, resolveThis.bind(this));
+    });
+  }));
+};
+
+
+Container.prototype.fileDownload = function fileDownload(files) {
+  var _self = this;
+
+  if (typeof(files) === "string") {
+    files = files.split(',').map(function(file) {return {name: file.trim()};});
+  }
+
+  return spromise.all(files.map(function(file) {
+    return spromise(function() {
+      _self.blobSvc.getBlobToStream(_self.name, file.name, fs.createWriteStream(file.name), resolveThis.bind(this));
+    });
+  }));
+};
+
+
+Container.prototype.fileDelete = function fileDownload(files) {
+  var _self = this;
+
+  if (typeof(files) === "string") {
+    files = files.split(',').map(function(file) {return {name: file.trim()};});
+  }
+
+  return spromise.all(files.map(function(file) {
+    return spromise(function() {
+      _self.blobSvc.deleteBlob(_self.name, file.name, resolveThis.bind(this));
     });
   }));
 };
@@ -58,10 +93,10 @@ function resolveThis(error, result /*, response*/) {
   else {
     this.resolve(result);
   }
-}  
+}
 
 
-function getFiles(src) {
+function getLocalFiles(src) {
   if (!src) {
     throw new TypeError("must provide a valid file/directory");
   }
