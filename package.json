@@ -1,6 +1,6 @@
 {
   "name": "zure-content",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "File upload to Azure",
   "main": "index.js",
   "scripts": {
@@ -22,14 +22,16 @@
     "url": "https://github.com/MiguelCastillo/azureContainer/issues"
   },
   "homepage": "https://github.com/MiguelCastillo/azureContainer",
+  "bin": {
+    "zureupload": "./cli.js"
+  },
   "dependencies": {
+    "nconf": "~0.6.9",
     "spromise": "~0.7.1",
     "azure-storage": "~0.4.0",
     "lodash": "~2.4.1",
     "process": "~0.9.0"
   },
   "devDependencies": {
-    "nconf": "~0.6.9",
-    "process": "~0.9.0"
   }
 }

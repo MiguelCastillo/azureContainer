@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var AzureContainer = require('./index');
 var nconf = require('nconf');
 
