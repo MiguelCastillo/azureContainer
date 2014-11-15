@@ -3,6 +3,12 @@ Utility to simplifly uploading files to an azure container.
 
 AzureContainer is promise based, so each interface that interacts with Azure services will return a promise.
 
+## Install
+
+```
+$ npm install zure-content
+```
+
 ## API
 
 ### AzureContainer(container, accountName, accountKey)
@@ -50,7 +56,7 @@ promise
 
 ## Sample code
 
-A fully functional sample running AzureContainer can be seen in <a href='https://github.com/MiguelCastillo/azureContainer/blob/master/test.js'>test.js</a>
+A fully functional sample running AzureContainer can be seen in <a href='https://github.com/MiguelCastillo/azureContainer/blob/master/cli.js'>cli.js</a>
 
 Let's dissect it right here:
 
@@ -79,7 +85,7 @@ var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
 
 #### AzureContainer
 
-First create an instance of AzureContainer.  This is the component that gives us access to upload files to a container.
+First create an instance of AzureContainer.  This is the component that gives us access to upload files to an Azure container.
 
 ``` javascript
 var AzureContainer = require('azureContainer');
@@ -103,25 +109,34 @@ Now we can list what was uploaded
 azureContainer.list()
 ```
 
-## Run the sample code
-You can run it with something as simple as:
 
-First do your usual
+## zureupload
+
+When azureContainer is installed globally, `zureupload` is setup as shell command you can use to upload files to Azure.  And if you configure it correctly, it can be a handy tool.
+
+
+#### Here is how:
+
+1. Install azureContainer globally. `$ npm install zure-content -g`
+2. Add `AZURE_STORAGE_ACCOUNT` as an environment variable. e.g. `$ export AZURE_STORAGE_ACCOUNT='azureme'`
+3. Add `AZURE_STORAGE_ACCESS_KEY` as an environment variable. e.g. `$ export AZURE_STORAGE_ACCESS_KEY='==yourcontainerkey=='`
+
+Now from the command line you can run something like:
 
 ```
-$ npm install
+$ zureupload --file document.txt
 ```
 
-Then run the sample
+That uploads `document.txt` to the default container `Documents`.  You can further configure the container as an environment variable so that further uploads go to a different location.
 
 ```
-$ node test.js --file . --container testme --account-name name --account-key key
+export AZURE_STORAGE_CONTAINER='AnotherFolder'
+```
+
+#### A more manual run:
+
+```
+$ zureupload --file . --container testme --account-name name --account-key key
 ```
 
 That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
-
-## npm Install
-
-```
-$ npm install zure-content
-```
