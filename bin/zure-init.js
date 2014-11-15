@@ -8,21 +8,23 @@ nconf
   .argv()
   .file({ file: '.zure.json' });
 
-var file          = nconf.get("file");
-var accountName   = nconf.get("account-name");
-var accessKey     = nconf.get("account-key");
-var accessType    = nconf.get("access-type");
-var containerName = nconf.get("container-name");
-var print         = nconf.get("print");
+// Get args...
+var args  = getArgs();
+var print = nconf.get('print');
 
-nconf.set("file", file);
-nconf.set("account-name", accountName);
-nconf.set("access-key", accessKey);
-nconf.set("access-type", accessType);
-nconf.set("container-name", containerName);
+args.forEach(function(key) {
+  var value = nconf.get(key);
+
+  if (value !== true) {
+    nconf.set(key, value);
+  }
+  else {
+    nconf.clear(key);
+  }
+});
 
 
-if (print) {
+if (!args.length || print) {
   printSettings();
 }
 else {
@@ -40,5 +42,13 @@ else {
 function printSettings() {
   fs.readFile('.zure.json', function (err, data) {
     console.dir(JSON.parse(data.toString()));
+  });
+}
+
+
+function getArgs() {
+  var args = nconf.stores.argv.get();
+  return Object.keys(args).filter(function(arg) {
+    return arg !== '_' && arg !== '$0';
   });
 }
