@@ -117,9 +117,17 @@ When azureContainer is installed globally, `zureupload` is setup as shell comman
 
 #### Here is how:
 
-1. Install azureContainer globally. `$ npm install zure-content -g`
-2. Add `AZURE_STORAGE_ACCOUNT` as an environment variable. e.g. `$ export AZURE_STORAGE_ACCOUNT='azureme'`
-3. Add `AZURE_STORAGE_ACCESS_KEY` as an environment variable. e.g. `$ export AZURE_STORAGE_ACCESS_KEY='==yourcontainerkey=='`
+- Install azureContainer globally.
+
+  `$ npm install zure-content -g`
+
+- Add `AZURE_STORAGE_ACCOUNT` as an environment variable.
+
+  `$ export AZURE_STORAGE_ACCOUNT='azureme'`
+
+- Add `AZURE_STORAGE_ACCESS_KEY` as an environment variable.
+
+  `$ export AZURE_STORAGE_ACCESS_KEY='==yourcontainerkey=='`
 
 Now from the command line you can run something like:
 
