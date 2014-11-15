@@ -27,6 +27,10 @@ Container.prototype.initialize = function initialize(accessLevel) {
 Container.prototype.fileUpload = function fileUpload(files) {
   var _self = this;
 
+  if (!files) {
+    throw new TypeError("Must provide files to upload");
+  }
+
 //  Not supporting this quite yet.
 //
 //  if (typeof(files) === "string") {
@@ -51,6 +55,10 @@ Container.prototype.fileUpload = function fileUpload(files) {
 Container.prototype.fileDownload = function fileDownload(files) {
   var _self = this;
 
+  if (!files) {
+    return spromise.reject("Must provide files to download");
+  }
+
   return spromise.all(files.map(function(file) {
     return spromise(function() {
       _self.blobSvc.getBlobToStream(_self.name, file.name, fs.createWriteStream(file.name), resolveThis.bind(this));
@@ -61,6 +69,10 @@ Container.prototype.fileDownload = function fileDownload(files) {
 
 Container.prototype.fileDelete = function fileDownload(files) {
   var _self = this;
+
+  if (!files) {
+    return spromise.reject("Must provide files to delete");
+  }
 
   return spromise.all(files.map(function(file) {
     return spromise(function() {
