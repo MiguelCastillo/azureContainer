@@ -33,11 +33,31 @@ Examples
 promise
 
 
-### uploadFile(src) : promise
+### uploadFile(file | directory) : promise
 Method to upload a file or files in a directory.
 
 #### arguments
-- `src` - Required string that's either the name of a file or a directory.  If a directory name is passed, all files directly below it will be uploaded.  This will probably be upgraded to handle globs.
+- `file | directory` - Required string that's either the name of a file or a directory.  If a directory name is passed, all files directly below it will be uploaded.  This will probably be upgraded to handle globs.
+
+#### returns
+promise
+
+
+### downloadFile(file | files) : promise
+Method to donwload a file or group of files.
+
+#### arguments
+- `file | files` - Require string|array for the file(s) name to be downloaded.
+
+#### returns
+promise
+
+
+### deleteFile(file | files) : promise
+Method to delete a file or group of files.
+
+#### arguments
+- `file | files` - Require string|array for the file(s) name to be deleted.
 
 #### returns
 promise
