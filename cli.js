@@ -13,7 +13,7 @@ var src         = nconf.get("file")         || nconf.get("AZURE_STORAGE_FILE");
 var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
 
 // Prepare an azure container with provided name in order to upload some files
-var azureContainer = new AzureContainer(container, accountName, accountKey);
+var azureContainer = new AzureContainer(container || "Documents", accountName, accountKey);
 
 
 ///
