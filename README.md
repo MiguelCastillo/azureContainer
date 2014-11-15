@@ -101,7 +101,7 @@ azureContainer.initialize()
 
 Then we upload the file
 ``` javascript
-azureContainer.fileUpload(src)
+azureContainer.fileUpload(file)
 ```
 
 Now we can list what was uploaded
@@ -112,10 +112,22 @@ azureContainer.list()
 
 ## zureup
 
-When azureContainer is installed globally, `zureup` is setup as shell command you can use to upload files to Azure.  And if you configure it correctly, it can be a handy tool.
+When azureContainer is installed globally, `zureup` is setup as shell command you can use to upload files to Azure.
 
 
-#### Here is how:
+#### Sample upload:
+
+```
+$ zureup --file . --container testme --account-name name --account-key key
+```
+
+That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
+
+
+That's a lot of information, but if you configure `zure-content` correctly you can really simplify all `zure` commands.
+
+
+### How to simplify `zure` commands:
 
 - Install azureContainer globally.
 
@@ -135,16 +147,36 @@ Now from the command line you can run something like:
 $ zureup --file document.txt
 ```
 
-That uploads `document.txt` to the default container `Documents`.  You can further configure the container as an environment variable so that further uploads go to a different location.
+That uploads `document.txt` to the default container `Documents`.  You can configure the container as an environment variable as well so that further uploads go to a different location.
 
 ```
 $ export AZURE_STORAGE_CONTAINER='AnotherFolder'
 ```
 
-#### A more manual run:
+
+## zurels
+
+Command to list all files in the Azure container.
 
 ```
-$ zureup --file . --container testme --account-name name --account-key key
+$ zurels
 ```
 
-That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
+
+## zuredel
+
+Command to delete `--file` from the Azure container.  `--file` can take a list of comma separated files.  e.g.
+
+```
+$ zuredel --file "file1.txt, file2.txt"
+```
+
+
+## azuredown
+
+Command to download `--file` from Azure container.  `--file` can take a list of comma separated files.
+
+```
+$ zuredown --file "file1.txt, file2.txt"
+```
+
