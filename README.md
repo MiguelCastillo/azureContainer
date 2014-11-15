@@ -110,9 +110,9 @@ azureContainer.list()
 ```
 
 
-## zureupload
+## zureup
 
-When azureContainer is installed globally, `zureupload` is setup as shell command you can use to upload files to Azure.  And if you configure it correctly, it can be a handy tool.
+When azureContainer is installed globally, `zureup` is setup as shell command you can use to upload files to Azure.  And if you configure it correctly, it can be a handy tool.
 
 
 #### Here is how:
@@ -132,7 +132,7 @@ When azureContainer is installed globally, `zureupload` is setup as shell comman
 Now from the command line you can run something like:
 
 ```
-$ zureupload --file document.txt
+$ zureup --file document.txt
 ```
 
 That uploads `document.txt` to the default container `Documents`.  You can further configure the container as an environment variable so that further uploads go to a different location.
@@ -144,7 +144,7 @@ export AZURE_STORAGE_CONTAINER='AnotherFolder'
 #### A more manual run:
 
 ```
-$ zureupload --file . --container testme --account-name name --account-key key
+$ zureup --file . --container testme --account-name name --account-key key
 ```
 
 That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.

@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/MiguelCastillo/azureContainer",
   "bin": {
-    "zureupload": "./cli.js"
+    "zureup": "./cli.js"
   },
   "dependencies": {
     "nconf": "~0.6.9",
