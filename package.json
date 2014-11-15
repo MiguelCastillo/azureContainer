@@ -1,10 +1,10 @@
 {
   "name": "zure-content",
-  "version": "0.2.2",
-  "description": "File upload to Azure",
+  "version": "0.2.3",
+  "description": "File upload, download, delete, listing to Azure",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node cli.js"
   },
   "repository": {
     "type": "git",
