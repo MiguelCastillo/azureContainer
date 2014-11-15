@@ -110,24 +110,22 @@ azureContainer.list()
 
 ## CLI
 
+When azureContainer is installed globally, several shell commands will become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+
 ### zureup
 
-When azureContainer is installed globally, `zureup` is setup as shell command you can use to upload files to Azure.
-
-
-#### Sample upload:
+Command uploads a file or the files in a directory to an Azure container.
 
 ```
 $ zureup --file . --container testme --account-name name --account-key key
 ```
 
-That command will upload the files in the current directory into the container `testme`, which is located in account `name` and has the access key of `key`.
-
+That command will upload all the files in the current directory to the container `testme`, which is located in account `name` and has the access key of `key`.
 
 That's a lot of information, but if you configure `zure-content` correctly you can really simplify all `zure` commands.
 
 
-#### How to simplify `zure` commands:
+##### How to simplify `zure` commands:
 
 - Install azureContainer globally.
 
