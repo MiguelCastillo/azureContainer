@@ -19,7 +19,13 @@ deleteFile()
  * Download file/directory
  */
 function deleteFile() {
-  return azureContainer.fileDelete(settings.src)
+  var files = settings.src;
+
+  if (typeof(files) === "string") {
+    files = files.split(',').map(function(file) {return {name: file.trim()};});
+  }
+
+  return azureContainer.fileDelete(files)
     .done(function(data) {
       console.log("File deleted", data);
     });

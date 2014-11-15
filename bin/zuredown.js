@@ -19,7 +19,13 @@ downloadFile()
  * Download file/directory
  */
 function downloadFile() {
-  return azureContainer.fileDownload(settings.src)
+  var files = settings.src;
+
+  if (typeof(files) === "string") {
+    files = files.split(',').map(function(file) {return {name: file.trim()};});
+  }
+
+  return azureContainer.fileDownload(files)
     .done(function(data) {
       console.log("File uploaded", data);
     });

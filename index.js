@@ -51,10 +51,6 @@ Container.prototype.fileUpload = function fileUpload(files) {
 Container.prototype.fileDownload = function fileDownload(files) {
   var _self = this;
 
-  if (typeof(files) === "string") {
-    files = files.split(',').map(function(file) {return {name: file.trim()};});
-  }
-
   return spromise.all(files.map(function(file) {
     return spromise(function() {
       _self.blobSvc.getBlobToStream(_self.name, file.name, fs.createWriteStream(file.name), resolveThis.bind(this));
@@ -65,10 +61,6 @@ Container.prototype.fileDownload = function fileDownload(files) {
 
 Container.prototype.fileDelete = function fileDownload(files) {
   var _self = this;
-
-  if (typeof(files) === "string") {
-    files = files.split(',').map(function(file) {return {name: file.trim()};});
-  }
 
   return spromise.all(files.map(function(file) {
     return spromise(function() {
