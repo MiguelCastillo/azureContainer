@@ -138,7 +138,7 @@ $ zureup --file document.txt
 That uploads `document.txt` to the default container `Documents`.  You can further configure the container as an environment variable so that further uploads go to a different location.
 
 ```
-export AZURE_STORAGE_CONTAINER='AnotherFolder'
+$ export AZURE_STORAGE_CONTAINER='AnotherFolder'
 ```
 
 #### A more manual run:
