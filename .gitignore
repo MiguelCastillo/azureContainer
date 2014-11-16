@@ -1,3 +1,6 @@
+# Zure settings
+.zure.json
+
 # Logs
 logs
 *.log
