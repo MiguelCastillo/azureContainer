@@ -1,5 +1,4 @@
 var azureContainer = require('./factory')();
-var spromise       = require('spromise');
 var fs             = require('fs');
 var path           = require('path');
 var _              = require('lodash');
@@ -11,9 +10,14 @@ var _              = require('lodash');
  * can be completely removed.
  */
 function initializeContainer() {
+  var files = getFiles();
+
   return azureContainer.initialize(azureContainer.settings.accessType)
     .done(function(data) {
       console.log("Container initialized", data);
+    })
+    .then(function() {
+      return files;
     });
 }
 
@@ -21,23 +25,8 @@ function initializeContainer() {
 /**
  * Upload file/directory
  */
-function uploadFile() {
-  var files = azureContainer.settings.file;
-  var result = [];
-
-  if (typeof(files) === "string") {
-    files = files.split(',');
-  }
-
-  files.forEach(function(file) {
-    result.push.apply(result, getLocalFiles(file.trim()));
-  });
-
-  if (!result.length) {
-    return spromise.reject("No files to upload");
-  }
-
-  return azureContainer.fileUpload(result)
+function uploadFile(files) {
+  return azureContainer.fileUpload(files)
     .done(function(data) {
       console.log("Files uploaded", data);
     });
@@ -59,6 +48,22 @@ function reportError(from) {
   return function errorHandler(error) {
     console.log(from, error);
   };
+}
+
+
+function getFiles() {
+  var files = azureContainer.settings.file;
+  var result = [];
+
+  if (typeof(files) === "string") {
+    files = files.split(',');
+  }
+
+  files.forEach(function(file) {
+    result.push.apply(result, getLocalFiles(file.trim()));
+  });
+
+  return result;
 }
 
 
