@@ -151,11 +151,7 @@ var accessType    = nconf.get("access-type")    || nconf.get("AZURE_STORAGE_ACCE
 var containerName = nconf.get("container-name") || nconf.get("AZURE_STORAGE_CONTAINER_NAME");
 ```
 
-- --file (file) is what we are uploading.
-- --account-name (accountName) is the name of azure storage account where the container is located.
-- --access-key (accessKey) is the access key for the azure storage account.
-- --container-name (containerName) is the name of the container where files are uploaded/download/deleted from.
-- --access-type (accessType) is the type access when creating new containers.
+See <a href="#arguments-and-environment-variables">Arguments and environment variables</a> for details on those fields.
 
 
 #### AzureContainer
@@ -187,6 +183,19 @@ azureContainer.list()
 ## CLI
 
 When azureContainer is installed globally, several shell commands become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+
+In order to run `zureup`, `zuredown`, `zuredel`, and `zuredel` you must provide an account name and an access key.  You can set those as environment variables, directory settings, and just as arguments to those commands.
+
+
+### Arguments and environment variables
+
+Arguments        | Alias  | Environment Variable         | Descriptions
+-----------------|--------|------------------------------|----------------
+--file           | -f     | AZURE_STORAGE_FILE           | file(s) to be uploaded/download/deleted
+--account-name   | -a     | AZURE_STORAGE_ACCOUNT        | Azure storage account name
+--access-key     | -k     | AZURE_STORAGE_ACCESS_KEY     | Azure storage account access key
+--container-name | -c     | AZURE_STORAGE_CONTAINER_NAME | Azure container to upload/delete/download and list files to and from.
+--access-type    |  n/a   | AZURE_STORAGE_ACCESS_TYPE    | Access type when creating a container
 
 
 ### zure-init
@@ -238,7 +247,7 @@ $ zureup -f "file1.txt, file2.txt" -c testme -a name -k key
 
 That will upload `file1.txt` and `file2.txt` form the current directory.
 
-That's a lot of information in each command, but you can configure azureContainer to really simplify all `zure` commands.  Please see <a href="https://github.com/MiguelCastillo/azureContainer#configuring-azurecontainer-cli">Configuring azureContainer</a> for more details.
+That's a lot of information in each command, but you can configure azureContainer to really simplify all `zure` commands.  Please see <a href="#configuring-azurecontainer-cli">Configuring azureContainer</a> for more details.
 
 
 ### zurels
