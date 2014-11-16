@@ -1,7 +1,9 @@
 ## azureContainer
-Simplify uploading, download, deleting, and listing of files in an azure container.  azureContainer can be used in your code as a library, and installing it globably will make several `zure` CLI commands available to you.
+Nodejs component to simplify uploading, downloading, deleting, and listing of files in an Azure container.
 
-We will start with integrating it into your code and then the go over CLI.
+It can be used in your code as a library. And installing it globably will make several `zure` CLI commands available to you.
+
+We will start with the API, then a sample `cli.js` to illustrate integrating it in your code, and then we'll go over the `zure` CLI commands.
 
 ## Install
 
@@ -189,7 +191,7 @@ When azureContainer is installed globally, several shell commands become availal
 
 ### zure-init
 
--- azureContainer supports per directory settings, and this is the command to do this.
+-- azureContainer supports per directory settings, and this is the command to do it.
 
 Command to configure azureContainer in a directory. This is really handy if you want to simplify all `zure` commands you execute routinely in a particular directory.
 
