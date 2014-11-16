@@ -22,7 +22,7 @@ Constructor to create instances of the container manager. An intance of AzureCon
 - `accountKey` - Access key for the container
 
 
-### initialize(accessType) : method
+### initialize(accessLevel) : method
 Initializes the container.  If the container name does not exist, one is created.  If you already know the container exists, then you can safely omit calling this method.  If you are doubt, then always call this method.
 
 #### arguments
@@ -302,7 +302,9 @@ $ export AZURE_STORAGE_CONTAINER_NAME='AnotherFolder'
 
 - Add `account-name`, `access-key`, and `container-name` in one command.
 
-  `$ zure-init -a sweetaccount -k my-access-key -c remotecontainer
+```
+$ zure-init -a sweetaccount -k my-access-key -c remotecontainer
+```
 
 Now you can upload `document.txt` in the particular directory with the following command
 
