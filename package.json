@@ -33,8 +33,7 @@
     "nconf": "~0.6.9",
     "spromise": "~0.7.1",
     "azure-storage": "~0.4.0",
-    "lodash": "~2.4.1",
-    "process": "~0.9.0"
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
   }
