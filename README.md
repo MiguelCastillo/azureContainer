@@ -331,4 +331,3 @@ $ zure-init document.txt someother.doc
 ## How I use it
 
 I generally will have some default global settings so that I can just call `zure` commands from any directory.  For directories I frequently use, I setup azureContainer settings in that directory.  Generally a container, and sometimes default files.  The goal for me is to simplify the arguments I pass into all `zure` commands.  I generally don't configure different account names or access key per directory, although this is completely up to you.
-
