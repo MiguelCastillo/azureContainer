@@ -213,7 +213,7 @@ And running the following command will just list all the files in the container 
 $ zurels
 ```
 
-And the commond below will delete `index.js` from the container `dist`
+And the command below will delete `index.js` from the container `dist`
 
 ```
 $ zuredel
@@ -238,7 +238,7 @@ $ zureup -f "file1.txt, file2.txt" -c testme -a name -k key
 
 That will upload `file1.txt` and `file2.txt` form the current directory.
 
-That's a lot of information in each command, but you can configure azureContainer to really simplify all `zure` commands.  Please see Configuring azureContainer for more details.
+That's a lot of information in each command, but you can configure azureContainer to really simplify all `zure` commands.  Please see <a href="https://github.com/MiguelCastillo/azureContainer#configuring-azurecontainer-cli">Configuring azureContainer</a> for more details.
 
 
 ### zurels
@@ -325,7 +325,7 @@ $ zureup document.txt someother.doc
 $ zuredel document.txt someother.doc
 ```
 
-Or even:
+Or you can actually add those files to your setting so you don't even have to pass them in.
 
 ```
 $ zure-init document.txt someother.doc
