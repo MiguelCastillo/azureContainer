@@ -1,18 +1,20 @@
 #!/usr/bin/env node
 
+var confalias = require('../src/confalias');
 var nconf = require('nconf');
 var fs = require('fs');
 
 // Setup nconf to read from env
 nconf
-  .argv()
+  .argv(confalias)
   .file({ file: '.zure.json' });
 
 // Get args...
-var args  = getArgs();
-var print = nconf.get('print');
+var options = getOptions();
+var args    = getArgsAsString();
+var print   = nconf.get('print');
 
-args.forEach(function(key) {
+options.forEach(function(key) {
   var value = nconf.get(key);
 
   if (value !== true) {
@@ -24,7 +26,13 @@ args.forEach(function(key) {
 });
 
 
-if (!args.length || print) {
+if (!options.length) {
+  nconf.set('file', '"' + getArgsAsString() + '"');
+  nconf.set('f', '"' + getArgsAsString() + '"');
+}
+
+
+if ((!args && !options.length) || print) {
   printSettings();
 }
 else {
@@ -46,9 +54,14 @@ function printSettings() {
 }
 
 
-function getArgs() {
-  var args = nconf.stores.argv.get();
-  return Object.keys(args).filter(function(arg) {
+function getOptions() {
+  var options = nconf.stores.argv.get();
+  return Object.keys(options).filter(function(arg) {
     return arg !== '_' && arg !== '$0';
   });
+}
+
+
+function getArgsAsString() {
+  return nconf.stores.argv.get('_').join(",");
 }

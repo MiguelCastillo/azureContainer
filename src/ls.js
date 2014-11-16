@@ -1,13 +1,4 @@
-#!/usr/bin/env node
-
 var azureContainer = require('./factory')();
-
-
-///
-/// Run sequence
-///
-listFiles()
-  .catch(reportError("listFiles"));
 
 
 /**
@@ -27,3 +18,8 @@ function reportError(from) {
   };
 }
 
+
+module.exports = function() {
+  listFiles()
+    .catch(reportError("listFiles"));
+};

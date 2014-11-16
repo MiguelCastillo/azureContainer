@@ -23,11 +23,11 @@
   },
   "homepage": "https://github.com/MiguelCastillo/azureContainer",
   "bin": {
-    "zure-init": "./bin/zure-init.js",
-    "zurels": "./bin/zurels.js",
-    "zureup": "./bin/zureup.js",
-    "zuredown": "./bin/zuredown.js",
-    "zuredel": "./bin/zuredel.js"
+    "zure-init": "./bin/init.js",
+    "zurels": "./bin/ls.js",
+    "zureup": "./bin/up.js",
+    "zuredown": "./bin/down.js",
+    "zuredel": "./bin/del.js"
   },
   "dependencies": {
     "nconf": "~0.6.9",
