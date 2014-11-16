@@ -182,9 +182,11 @@ azureContainer.list()
 
 ## CLI
 
-When azureContainer is installed globally, several shell commands become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+When azureContainer is installed globally, several shell commands become availalbe, which we will be going over shortly; `zure-init`, `zureup`, `zuredown`, `zuredel`, and `zurels`.
 
-In order to run `zureup`, `zuredown`, `zuredel`, and `zuredel` you must provide an account name and an access key.  You can set those as environment variables, directory settings, and just as arguments to those commands.
+In order to run `zureup`, `zuredown`, `zuredel`, and `zuredel` you must provide an account name and an access key.  You can set those as environment variables, directory settings, and as arguments; any combination is valid.
+
+- The order of precendence is arguments, directory settings, and envrionment variables.
 
 
 ### Arguments and environment variables
