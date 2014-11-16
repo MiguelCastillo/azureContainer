@@ -1,20 +1,13 @@
 var azureContainer = require('./factory')();
-var spromise = require('spromise');
+var spromise       = require('spromise');
+var fileMeta       = require('./fileMeta');
 
 
 /**
  * Download file/directory
  */
 function downloadFile() {
-  var files = azureContainer.settings.file;
-
-  if (typeof(files) === "string") {
-    files = files.split(',');
-  }
-
-  files = files.map(function(file) {
-    return {name: file.trim()};
-  });
+  var files = fileMeta.forRemoteFiles(azureContainer.settings.file);
 
   if (!files.length) {
     return spromise.reject("No files to download");

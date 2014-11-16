@@ -1,25 +1,25 @@
 #!/usr/bin/env node
 
-var AzureContainer = require('./index');
+var AzureContainer = require('zure-content');
 var nconf = require('nconf');
 
 // Setup nconf to read from env
 nconf.argv().env();
 
-var accountName = nconf.get("account-name") || nconf.get("AZURE_STORAGE_ACCOUNT");
-var accountKey  = nconf.get("account-key")  || nconf.get("AZURE_STORAGE_ACCESS_KEY");
-var container   = nconf.get("container")    || nconf.get("AZURE_STORAGE_CONTAINER");
-var src         = nconf.get("file")         || nconf.get("AZURE_STORAGE_FILE");
-var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
+var file          = nconf.get("file")           || nconf.get("AZURE_STORAGE_FILE");
+var accountName   = nconf.get("account-name")   || nconf.get("AZURE_STORAGE_ACCOUNT");
+var accessKey     = nconf.get("access-key")     || nconf.get("AZURE_STORAGE_ACCESS_KEY");
+var accessType    = nconf.get("access-type")    || nconf.get("AZURE_STORAGE_ACCESS_TYPE");
+var containerName = nconf.get("container-name") || nconf.get("AZURE_STORAGE_CONTAINER_NAME");
 
 // Prepare an azure container with provided name in order to upload some files
-var azureContainer = new AzureContainer(container || "Documents", accountName, accountKey);
+var azureContainer = new AzureContainer(containerName || "documents", accountName, accessKey);
 
 
 ///
 /// Run sequence
 ///
-initializeContainer(type)
+initializeContainer(accessType)
   .then(uploadFile, reportError("initializeContainer"))
   .then(listFiles, reportError("uploadFile"))
   .catch(reportError("listFiles"));
@@ -31,7 +31,7 @@ initializeContainer(type)
  * can be completely removed.
  */
 function initializeContainer() {
-  return azureContainer.initialize(type)
+  return azureContainer.initialize(accessType)
     .done(function(data) {
       console.log("Container initialized", data);
     });
@@ -42,7 +42,7 @@ function initializeContainer() {
  * Upload file/directory
  */
 function uploadFile() {
-  return azureContainer.fileUpload(src)
+  return azureContainer.fileUpload( AzureContainer.fileMeta.forLocalFiles(file) )
     .done(function(data) {
       console.log("Files uploaded", data);
     });

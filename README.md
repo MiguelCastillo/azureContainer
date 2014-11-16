@@ -1,6 +1,7 @@
 ## azureContainer
-Simplify uploading, download, deleting, and listing of files in an azure container.
+Simplify uploading, download, deleting, and listing of files in an azure container.  azureContainer can be used in your code as a library, and installing it globably will make several `zure` CLI commands available to you.
 
+We will start with integrating it into your code and then the go over CLI.
 
 ## Install
 
@@ -10,16 +11,16 @@ $ npm install zure-content
 
 ## API
 
-### AzureContainer(container, accountName, accountKey)
-Constructor to create instances of the container manager. An intance of AzureContainer provides interfaces to easily interact with your azure containers.
+### AzureContainer(containerName, accountName, accountKey)
+Constructor to create instances of the container manager. An intance of AzureContainer provides interfaces to easily interact with your Azure containers.
 
 #### arguments
-- `container` - Name of the container to upload files to.
+- `containerName` - Name of the container to upload files to.
 - `accountName` - Name of the storage account in which the container exists
 - `accountKey` - Access key for the container
 
 
-### initialize(access) : method
+### initialize(accessType) : method
 Initializes the container.  If the container name does not exist, one is created.  If you already know the container exists, then you can safely omit calling this method.  If you are doubt, then always call this method.
 
 #### arguments
@@ -33,31 +34,31 @@ Examples
 promise
 
 
-### uploadFile(file | directory) : promise
-Method to upload a file or files in a directory.
+### uploadFile(files) : promise
+Method to upload files to an Azure container
 
 #### arguments
-- `file | directory` - Required string that's either the name of a file or a directory.  If a directory name is passed, all files directly below it will be uploaded.  This will probably be upgraded to handle globs.
+- `files` - Required array with files to be uploaded. In order to build a proper list of files, use `getLocalFiles`. See `getLocalFiles` for more details.
 
 #### returns
 promise
 
 
-### downloadFile(file | files) : promise
-Method to donwload a file or group of files.
+### downloadFile(files) : promise
+Method to donwload files from an Azure container.  In order to build a proper list of files, use `getRemoteFiles`. See `getRemoteFiles` for more details.
 
 #### arguments
-- `file | files` - Require string|array for the file(s) name to be downloaded.
+- `files` - Required array for the file(s) to be downloaded.
 
 #### returns
 promise
 
 
-### deleteFile(file | files) : promise
-Method to delete a file or group of files.
+### deleteFile(files) : promise
+Method to delete files from an Azure container.  In order to build a proper list of files, use `getRemoteFiles`. See `getRemoteFiles` for more details.
 
 #### arguments
-- `file | files` - Require string|array for the file(s) name to be deleted.
+- `files` - Required array for the file(s) to be deleted.
 
 #### returns
 promise
@@ -73,11 +74,64 @@ none
 promise
 
 
+### fileMeta.forLocalFiles(files | directories) : Array&lt;files&gt; : static
+Method to create an array of files suitable for operations such as upload.  It takes in a combination of file and directory names.  When providing a directory name, all the files in the drectory are processed, but it does not do so recursively.  This method also verifies that all files and directories exist.
+
+``` javascript
+var AzureContainer = require('zure-content');
+var azureContainer = new AzureContainer(containerName, accountName, accessType);
+
+// Create proper list of files for upload.
+var files = AzureContainer.fileMeta.forLocalFiles(['file1.txt', 'file2.txt', 'src']);
+
+// Upload files
+azureContainer.uploadFile(files);
+```
+
+#### arguments
+- `files` - A string or array of file names to be processed.  If it is a string, it can be a list of comma separated names.  E.g.  `file1.txt, file2.txt`.
+- `directory` - A string or array of directory names to be processed.  If it is a string, it can be a list of comma separated names. E.g. `bin, src`.
+
+#### returns
+Array< {file: filename, fullPath: pathtofile} >
+
+
+### fileMeta.forRemoteFiles(files) : Array&lt;files&gt; : static
+Method to create an array of files suitable for operations such as download/delete.
+
+``` javascript
+var AzureContainer = require('zure-content');
+var azureContainer = new AzureContainer(containerName, accountName, accessType);
+
+// Create proper list of files for deletion.
+var files = AzureContainer.fileMeta.forRemoteFiles(['file1.txt', 'file2.txt']);
+
+// Delete files
+azureContainer.deleteFile(files);
+```
+
+#### arguments
+- `files` - A string or array of file names to be processed.  If it is a string, it can be a list of comma separated names.  E.g.  `file1.txt, file2.txt`.
+
+#### returns
+Array< {file: filename} >
+
+
 ## Sample code
 
-A fully functional sample running AzureContainer can be seen in <a href='https://github.com/MiguelCastillo/azureContainer/blob/master/cli.js'>cli.js</a>
+A fully functional sample running AzureContainer can be seen in <a href='https://github.com/MiguelCastillo/azureContainer/blob/master/sample/cli.js'>cli.js</a>
 
-Let's dissect it right here:
+#### Running the sample
+
+In order to run the sample, you will need a storage account name and an access key to the storage account.
+
+```
+$ cd sample
+$ npm install
+$ ./cli.js --account-name accountname --access-key accesskey --file cli.js
+```
+
+Let's dissect the code right here:
 
 #### nconf
 `nconf` allows us to process input from the cli and environment variables.  Whichever is found first, with cli arguments having higher priority.
@@ -88,39 +142,39 @@ var nconf = require('nconf');
 // Setup nconf to read from env
 nconf.argv().env();
 
-var accountName = nconf.get("account-name") || nconf.get("AZURE_STORAGE_ACCOUNT");
-var accountKey  = nconf.get("account-key")  || nconf.get("AZURE_STORAGE_ACCESS_KEY");
-var container   = nconf.get("container")    || nconf.get("AZURE_STORAGE_CONTAINER");
-var src         = nconf.get("file")         || nconf.get("AZURE_STORAGE_FILE");
-var type        = nconf.get("type")         || nconf.get("AZURE_STORAGE_TYPE");
+var file          = nconf.get("file")           || nconf.get("AZURE_STORAGE_FILE");
+var accountName   = nconf.get("account-name")   || nconf.get("AZURE_STORAGE_ACCOUNT");
+var accessKey     = nconf.get("access-key")     || nconf.get("AZURE_STORAGE_ACCESS_KEY");
+var accessType    = nconf.get("access-type")    || nconf.get("AZURE_STORAGE_ACCESS_TYPE");
+var containerName = nconf.get("container-name") || nconf.get("AZURE_STORAGE_CONTAINER_NAME");
 ```
 
-- accountName is the name of azure account where the container is located.
-- accountKey is the container access key.
-- container is the name of the container where files are uploaded to
-- src is what we are uploading.  This can be a file or a directory.  NOTE: directories are not processed recursively.
-- type is the type of container to create if one does not already exist.  Defaults to `private`.
+- --file (file) is what we are uploading.
+- --account-name (accountName) is the name of azure storage account where the container is located.
+- --access-key (accessKey) is the access key for the azure storage account.
+- --container-name (containerName) is the name of the container where files are uploaded/download/deleted from.
+- --access-type (accessType) is the type access when creating new containers.
 
 
 #### AzureContainer
 
-First create an instance of AzureContainer.  This is the component that gives us access to upload files to an Azure container.
+Create an instance of AzureContainer.  This is the component that gives us access to upload files to an Azure container.
 
 ``` javascript
-var AzureContainer = require('azureContainer');
+var AzureContainer = require('azure-content');
 
-// Prepare an azure container with provided name in order to upload some files
-var azureContainer = new AzureContainer(container, accountName, accountKey);
+// Prepare an azure container with provided name in order to upload files
+var azureContainer = new AzureContainer(containerName, accountName, accessType);
 ```
 
-Then we initialize the container... This will create a container for you if one does not exist.  This call is completely optional if you know the container you are going to upload your file/directory to already exists.  We include it here to be thorough.
+Then we initialize the container... This will create a container for you if one does not exist.  This call is completely optional if you know the container you are going to upload your files to already exists.  We include it here to be thorough.
 ``` javascript
 azureContainer.initialize()
 ```
 
 Then we upload the file
 ``` javascript
-azureContainer.fileUpload(file)
+azureContainer.fileUpload( AzureContainer.fileMeta.forLocalFiles(file) )
 ```
 
 Now we can list what was uploaded
@@ -130,26 +184,96 @@ azureContainer.list()
 
 ## CLI
 
-When azureContainer is installed globally, several shell commands will become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+When azureContainer is installed globally, several shell commands become availalbe; `zureup`, `zuredown`, `zuredel`, and `zuredls`.
+
+
+### zure-init
+
+-- azureContainer supports per directory settings, and this is the command to do this.
+
+Command to configure azureContainer in a directory. This is really handy if you want to simplify all `zure` commands you execute routinely in a particular directory.
+
+For example, the command below will create a settings file that will automatically set `index.js` as the file and `dist` as the container.  Once configured, all further `zure` commands will use that file and container.
+
+```
+$ zure-init -f index.js -c dist
+```
+
+Now anytime you run the command below, the file `index.js` will be uploaded to the container `dist`.
+
+```
+$ zureup
+```
+
+And running the following command will just list all the files in the container `dist`.
+
+```
+$ zurels
+```
+
+And the commond below will delete `index.js` from the container `dist`
+
+```
+$ zuredel
+```
+
+- You can setup an access key and account name for each directory as well.
+
 
 ### zureup
 
-Command uploads a file or the files in a directory to an Azure container.
+Command uploads `-f` file(s) to an Azure container.  You can specify a file, a list of files, and directories.
 
 ```
-$ zureup --file . --container testme --account-name name --account-key key
+$ zureup -f . -c testme -a name -k key
 ```
 
-That command will upload all the files in the current directory to the container `testme`, which is located in account `name` and has the access key of `key`.
+That will upload all the files in the current directory to the container `testme`, which is located in account `name` and has the access key of `key`.
 
-That's a lot of information, but if you configure `zure-content` correctly you can really simplify all `zure` commands.
+```
+$ zureup -f "file1.txt, file2.txt" -c testme -a name -k key
+```
+
+That will upload `file1.txt` and `file2.txt` form the current directory.
+
+That's a lot of information in each command, but you can configure azureContainer to really simplify all `zure` commands.  Please see Configuring azureContainer for more details.
 
 
-##### How to simplify `zure` commands:
+### zurels
 
-- Install azureContainer globally.
+Command to list all files in an Azure container.
+
+```
+$ zurels -c testme
+```
+
+
+### zuredel
+
+Command to delete `-f` file(s) from an Azure container.
+
+```
+$ zuredel -f "file1.txt, file2.txt" -c testme
+```
+
+
+### zuredown
+
+Command to download `-f` file(s) from an Azure container.
+
+```
+$ zuredown -f "file1.txt, file2.txt" -c testme
+```
+
+
+### Configuring azureContainer CLI
+
+- First, install azureContainer globably. Then, you customize it with global or per directory settings.
 
   `$ npm install zure-content -g`
+
+
+##### How to simplify `zure` commands with global settings:
 
 - Add `AZURE_STORAGE_ACCOUNT` as an environment variable.
 
@@ -162,39 +286,49 @@ That's a lot of information, but if you configure `zure-content` correctly you c
 Now from the command line you can run something like:
 
 ```
-$ zureup --file document.txt
+$ zureup -f document.txt
 ```
 
-That uploads `document.txt` to the default container `Documents`.  You can configure the container as an environment variable as well so that further uploads go to a different location.
+That uploads `document.txt` to the default container `documents`.  You can configure the container as an environment variable as well so that further uploads go to a different location.
 
 ```
-$ export AZURE_STORAGE_CONTAINER='AnotherFolder'
-```
-
-
-### zurels
-
-Command to list all files in the Azure container.
-
-```
-$ zurels
+$ export AZURE_STORAGE_CONTAINER_NAME='AnotherFolder'
 ```
 
 
-### zuredel
+#### Alternativaly, you can configure azureContainer per directory
 
-Command to delete `--file` from the Azure container.  `--file` can take a list of comma separated files.  e.g.
+- Add `account-name`, `access-key`, and `container-name` in one command.
 
-```
-$ zuredel --file "file1.txt, file2.txt"
-```
+  `$ zure-init -a sweetaccount -k my-access-key -c remotecontainer
 
-
-### zuredown
-
-Command to download `--file` from Azure container.  `--file` can take a list of comma separated files.
+Now you can upload `document.txt` in the particular directory with the following command
 
 ```
-$ zuredown --file "file1.txt, file2.txt"
+$ zureup -f document.txt
 ```
+
+You can also preconfigure the files to be uploaded. For example, you can set two files to always be uploaded with the following command:
+
+```
+$ zure-init -f "document.txt someother.doc"
+```
+
+You can further simplify that.  When you have azureContainer configured with a container, access key, and account name, you can just call the `zure` commands with just a list of files.  E.g.
+
+```
+$ zureup document.txt someother.doc
+$ zuredel document.txt someother.doc
+```
+
+Or even:
+
+```
+$ zure-init document.txt someother.doc
+```
+
+
+## How I use it
+
+I generally will have some default global settings so that I can just call `zure` commands from any directory.  For directories I frequently use, I setup azureContainer settings in that directory.  Generally a container, and sometimes default files.  The goal for me is to simplify the arguments I pass into all `zure` commands.  I generally don't configure different account names or access key per directory, although this is completely up to you.
 
