@@ -1,6 +1,6 @@
 {
   "name": "zure-content",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "File upload, download, delete, listing to Azure",
   "main": "index.js",
   "scripts": {
